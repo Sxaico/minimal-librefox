@@ -11,7 +11,7 @@ Firefox/Librewolf CSS theme with minimal vertical tabs sidebar based on Sidebery
 - Set toolkit.legacyUserProfileCustomizations.stylesheets to true.
 - Download userChrome.css from /chrome and add to Firefox user profile folder under /chrome.
 - Install Sidebery addon in Firefox from Firefox Addon Store.
-- Download sidebery.json and load sidebery.json it in Sidebery settings.
+- Download sidebery-mocha.json and load sidebery-mocha.json it in Sidebery settings.
 
 ## Credits
 Theme based on ![zayihu Minimal-Arc](https://github.com/zayihu/Minimal-Arc/blob/main/README.md?plain=1)
