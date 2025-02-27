@@ -1,120 +1,263 @@
+/****************************************
+ * 1) PALETA CATPPUCCIN MOCHA
+ ****************************************/
 html {
-  --custom-bg-light: #f1f1fa;
-  --custom-bg-dark: #262629;
-  --custom-bg: var(--custom-bg-light);
+  /* Paleta principal (Mocha) */
+  --cat-base:      #1E1E2E; /* Fondo base principal (dark) */
+  --cat-mantle:    #181825; 
+  --cat-crust:     #11111B;
+  --cat-surface0:  #313244;
+  --cat-surface1:  #45475A;
+  --cat-surface2:  #585B70;
+  --cat-overlay0:  #6C7086;
+  --cat-overlay1:  #7F849C;
+  --cat-overlay2:  #9399B2;
+  --cat-subtext0:  #A6ADC8;
+  --cat-subtext1:  #BAC2DE;
+  --cat-text:      #CDD6F4; /* Texto principal */
+  --cat-blue:      #89B4FA;
+  --cat-green:     #A6E3A1;
+  --cat-yellow:    #F9E2AF;
+  --cat-red:       #F38BA8;
+  --cat-rosewater: #F5E0DC; /* Suele usarse como cursor o highlight */
+
+  /* Sobrescribimos cualquier modo claro/oscuro con la misma paleta */
+  --custom-bg-light: var(--cat-base);
+  --custom-bg-dark:  var(--cat-base);
+  --custom-bg:       var(--cat-base);
+
+  --custom-text-light: var(--cat-text);
+  --custom-text-dark:  var(--cat-text);
+  --custom-text:       var(--cat-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    --custom-bg: var(--custom-bg-dark);
-  }
+/* ====== FORZAR COLOR DE TEXTO EN SIDEBAR ====== */
+
+/* 1. Sidebar en sí y su contenedor */
+#sidebar-box,
+#sidebar-box *,
+#sidebar,
+#sidebar * {
+  color: var(--custom-text) !important;
+  background-color: var(--custom-bg) !important;
 }
 
-body {
-  background: var(--custom-bg) !important;
+/* 2. Si Sidebery usa un root especial, lo forzamos también */
+#root.root,
+#root.root * {
+  color: var(--custom-text) !important;
+  background-color: var(--custom-bg) !important;
 }
 
-html:not([privatebrowsingmode="temporary"]) #navigator-toolbox {
-  padding-top: 3px;
-  padding-bottom: 4px;
-  background: var(--custom-bg) !important;
-  border-bottom: 0 !important;
-}
-
-#nav-bar {
-  background: var(--custom-bg) !important;
-}
-
-html:not([privatebrowsingmode="temporary"]) #sidebar-box {
-  background: var(--custom-bg) !important;
-}
-
-html:not([privatebrowsingmode="temporary"]) #sidebar-splitter {
+/****************************************
+ * 2) ESTILOS BASE DE LA INTERFAZ
+ ****************************************/
+/* Fondo y texto global */
+body,
+#navigator-toolbox,
+#nav-bar,
+#sidebar-box,
+#sidebar {
+  background-color: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
   border: none !important;
-  background: transparent !important;
-  width: 1px !important;
 }
 
-html:not([privatebrowsingmode="temporary"]) #TabsToolbar {
-  visibility: collapse !important;
+/* Ajuste de padding general en la parte superior */
+#navigator-toolbox {
+  padding-top: 3px !important;
+  padding-bottom: 4px !important;
 }
 
+/****************************************
+ * 3) OCULTAR BARRA DE PESTAÑAS (SIDEBERY)
+ ****************************************/
+/* Usamos pestañas verticales de Sidebery, 
+   así que ocultamos la barra nativa */
 #TabsToolbar {
-  background: var(--custom-bg) !important;
+  visibility: collapse !important;
+  background-color: var(--custom-bg) !important;
 }
 
-html:not([privatebrowsingmode="temporary"]) .titlebar-buttonbox-container {
-  position: absolute;
-  right: 0;
-  top: 9px;
-  display: flex;
-  justify-content: center;
-  width: 110px !important;
-}
-
-.titlebar-button {
-  width: 36px !important;
-}
-
-html:not([privatebrowsingmode="temporary"]) #nav-bar {
-  width: calc(100% - 110px);
-}
-
-html:not([privatebrowsingmode="temporary"]) #sidebar-header {
-  display: none;
-}
-
+/* Ocultar la etiqueta de identidad en la URL (el texto extra del sitio) */
 #identity-icon-label {
-  display: none;
+  display: none !important;
 }
 
+/****************************************
+ * 4) BARRA DE NAVEGACIÓN (FLEX + CENTRADO URL)
+ ****************************************/
+/* Normalmente #urlbar está dentro de #urlbar-container */
+#nav-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 32px !important;
+}
+
+/* Centra la barra de direcciones */
+#urlbar-container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Limita el ancho máximo de la barra de direcciones (opcional) */
 #urlbar {
-  left: 50% !important;
-  transform: translateX(-50%);
   max-width: 960px !important;
 }
 
+/* Fondo transparente en la barra de direcciones */
 #urlbar:not([breakout-extend]) #urlbar-background {
-  background: none !important;
   background-color: transparent !important;
 }
 
-html:not([privatebrowsingmode="temporary"]) #sidebar-box {
-  --uc-sidebar-width: 45px;
-  --uc-sidebar-hover-width: 360px;
-  --uc-autohide-sidebar-delay-before: 125ms;
-  --uc-autohide-sidebar-delay-after: 300ms;
-  --uc-autohide-transition-duration: 300ms;
-  --uc-autohide-transition-type: ease-in-out;
-  position: relative;
-  min-width: var(--uc-sidebar-width) !important;
-  width: var(--uc-sidebar-width) !important;
-  max-width: var(--uc-sidebar-width) !important;
-  z-index: 1;
+/****************************************
+ * 5) REORGANIZAR ICONOS DE LA DERECHA
+ ****************************************/
+/* Contenedor de iconos (extensiones, descargas, etc.) 
+   para mantenerlos en una sola línea a la derecha. */
+#nav-bar-customization-target {
+  display: flex !important;
+  align-items: center !important;
 }
 
-html:not([privatebrowsingmode="temporary"])
-  #main-window[sizemode="fullscreen"]
-  #sidebar-box {
-  --uc-sidebar-width: 1px;
+/****************************************
+ * 6) BOTÓN DE MENÚ HAMBURGER (LIBREWOLF/FIREFOX)
+ ****************************************/
+/* Ajusta si ves que no coincide en tu versión. */
+#PanelUI-button,
+#PanelUI-menu-button,
+#appMenu-button,
+#librewolf-button {
+  position: static !important;
+  margin: 0 !important;
+  /* Si deseas un pequeño margen, ajusta aquí */
 }
 
-html:not([privatebrowsingmode="temporary"]) #sidebar-splitter {
-  display: none;
+/****************************************
+ * 7) BOTONES DE VENTANA (MIN, MAX, CLOSE)
+ ****************************************/
+/* Ocultamos la barra de título nativa para evitar duplicados */
+#titlebar .titlebar-buttonbox-container {
+  display: none !important;
 }
 
-html:not([privatebrowsingmode="temporary"]) #sidebar {
-  transition: all var(--uc-autohide-transition-duration)
-    var(--uc-autohide-transition-type) var(--uc-autohide-sidebar-delay-after) !important;
-  min-width: var(--uc-sidebar-width) !important;
+/* Tus botones personalizados se integran como un ítem más en la fila, al final (order:99). */
+#nav-bar .titlebar-buttonbox-container {
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 10px !important; /* Separación con el ícono anterior */
+  order: 99 !important; 
 }
 
-html:not([privatebrowsingmode="temporary"]) #sidebar-box:hover > #sidebar {
-  min-width: var(--uc-sidebar-hover-width) !important;
-  transition-delay: var(--uc-autohide-sidebar-delay-before) !important;
+.titlebar-button {
+  width: 32px !important;  /* Ajusta el ancho para coincidir con el tamaño de los otros botones */
+  height: 32px !important;  /* Ajusta la altura para que sea uniforme con otros botones */
+  padding: 0 !important;    /* Elimina cualquier padding adicional */
+  border-radius: 4px !important;  /* Mantén el borde redondeado si lo deseas */
+  margin-right: 4px !important;  /* Añade un margen a la derecha (puedes ajustar el valor según necesites) */
+  /*background-color: var(--cat-surface2) !important; (opcional) */
 }
 
-html:not([privatebrowsingmode="temporary"]) .sidebar-panel {
-  background-color: transparent !important;
-  color: var(--newtab-text-primary-color) !important;
+
+/****************************************
+ * 8) SIDEBAR (SIDEBERY) EXPANDIBLE
+ ****************************************/
+#sidebar-splitter,
+#sidebar-header {
+  display: none !important;
+}
+
+/* Ajustes para colapsar/expandir lateral */
+#sidebar-box {
+  position: relative !important;
+  z-index: 1 !important;
+
+  --sidebar-collapsed-width: 45px;  /* colapsado */
+  --sidebar-expanded-width: 360px;  /* <-- ÚNICA MODIFICACIÓN (antes 360px) */
+  --sidebar-transition-duration: 300ms;
+  --sidebar-transition-ease: ease-in-out;
+
+  width: var(--sidebar-collapsed-width) !important;
+  min-width: var(--sidebar-collapsed-width) !important;
+  max-width: var(--sidebar-collapsed-width) !important;
+  
+  overflow: hidden !important;
+  transition:
+    width var(--sidebar-transition-duration) var(--sidebar-transition-ease),
+    min-width var(--sidebar-transition-duration) var(--sidebar-transition-ease),
+    max-width var(--sidebar-transition-duration) var(--sidebar-transition-ease);
+}
+
+#sidebar-box:hover {
+  width: var(--sidebar-expanded-width) !important;
+  min-width: var(--sidebar-expanded-width) !important;
+  max-width: var(--sidebar-expanded-width) !important;
+}
+
+/* Contenido interno del sidebar al 100% */
+#sidebar,
+#sidebar > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
+  transition: none !important;
+}
+
+/* Sombra opcional al expandirse */
+#sidebar-box:hover #sidebar {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/****************************************
+ * 9) EJEMPLOS OPCIONALES (SUGERENCIA 3)
+ ****************************************/
+/* Sub-Headlines, Labels con un color más suave */
+.subHeadline,
+.labelText {
+  color: var(--cat-subtext1) !important;
+}
+
+/* Énfasis menor (subtle) usando overlay1 */
+.subtleNote {
+  color: var(--cat-overlay1) !important;
+}
+
+/* Resaltar enlaces */
+a,
+.link {
+  color: var(--cat-blue) !important;
+}
+
+/* Éxito, advertencia, error */
+.success {
+  color: var(--cat-green) !important;
+}
+.warning {
+  color: var(--cat-yellow) !important;
+}
+.error {
+  color: var(--cat-red) !important;
+}
+
+/* Resaltar selección con overlay2 al 20-30% */
+.selected {
+  background-color: rgba(147, 153, 178, 0.3) !important; /* overlay2 a ~30% */
+}
+
+/* Cursor de texto con color rosewater (opcional)
+input, textarea { caret-color: var(--cat-rosewater) !important; }
+*/
+
+/****************************************
+ * 10) PANELES LATERALES / OTROS
+ ****************************************/
+/* Si tus paneles (historial, marcadores) necesitan color distinto */
+.sidebar-panel {
+  background-color: var(--cat-surface0) !important;
+  color: var(--cat-text) !important;
 }
