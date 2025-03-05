@@ -18,3 +18,4 @@ set about:config browser.compactmode.show = true
 
 ## Credits
 Theme based on ![zayihu Minimal-Arc](https://github.com/zayihu/Minimal-Arc/blob/main/README.md?plain=1)
+
